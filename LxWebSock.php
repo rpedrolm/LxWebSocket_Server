@@ -15,7 +15,7 @@
 //----------------------------------------------------------------------------
 
 
-abstract class LXStreamSocket
+abstract class LxStreamSocket
 {
     protected  $maxBufferSize;
     protected  $connections;
@@ -139,14 +139,12 @@ abstract class LXStreamSocket
 
     private function closeSocket( $client, $error )
     {
-        // get socket Id is destroyed
         $peer = stream_socket_get_name($client, true);
 
         fflush($client);
         fclose($client);
 
         unset( $this->connections[$peer] );
-        //print_r( $this->connections );
 
         $this->OnClosed( $client, $error );
     }
@@ -244,9 +242,8 @@ abstract class LXStreamSocket
                     continue;
                 }
 
-                // '?Closing from client'
-                // 8895 == ?  (ojo unicode)
-                // 818  == text
+                // 88 95  == ?  (ojo unicode)
+                // 81 8?  == text
                 // Command on First Byte
                 switch( $this->strToHex($buffer,1) ){
 
@@ -262,7 +259,6 @@ abstract class LXStreamSocket
             }
         }
 
-        // finish all
         fclose($server);
     }
 }
