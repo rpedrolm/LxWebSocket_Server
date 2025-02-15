@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://cdn.coespepuno.pe/LxWebSockR.0.5b.min.js"></script>
+<!-- <script src="LxWebSock.0.5b.js"></script> -->
+
+
+<script>
+//----------------------------------------------------------
+// esto va en la Applicacion final
+//----------------------------------------------------------
+var app = new LxSocketR( "41abefd4512b0124f9" );
+app.Start();
+
+app.On( 'ev02', ( obj ) => {
+
+    console.log( obj );
+} );
+
+app.On( 'chat', ( obj ) => {
+
+    //console.log( obj );
+    // console.log( obj.text );
+    text2.value = obj.text;
+} );
+</script>
+
+
+
+<div>
+    <input type="text" id="text1" name="text1" value="Esta es la linea">
+    <input type="text" id="text2" name="text2" value="">
+
+    <button onclick="app.Emit( 'chat', { text: text1.value } )">
+        Envia señal 1
+    </button>
+
+    <button onclick="app.Emit( 'ev02', { edad:105, peso:0, nombre:'Joel' } )">
+        Envia señal Random
+    </button>
+</div>
